@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go WebAssembly Example</title>
+</head>
+<body>
+  <h1>Go WebAssembly Example</h1>
+  <p>Result: <span id="result"></span></p>
+  <button onclick="runAdd()">Add 5 + 3</button>
+
+  <!-- 从 CDN 加载 wasm_exec.js -->
+  <script src="wasm_exec.js"></script>
+
+  <script>
+    // 创建 Go 实例
+    const go = new Go();
+
+    // 加载并运行 WebAssembly
+    WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+      go.run(result.instance);  // 启动 WASM
+    });
+
+    // 调用 WASM 中的 add 函数
+    function runAdd() {
+      const result = add(5, 3);  // 调用 Go 中暴露的 add 函数
+      document.getElementById("result").innerText = result;  // 显示结果
+    }
+  </script>
+</body>
+</html>

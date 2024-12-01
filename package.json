@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "build:wasm": "build.bat",
+    "start:dev": "npm run build:wasm && npm start",
     "start": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
